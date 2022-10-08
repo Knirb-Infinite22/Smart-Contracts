@@ -61,7 +61,7 @@ describe("Knirb", function () {
       
       const data = await implementation.populateTransaction.tokensToToken(accounts[0].address, [weth.address], usdc.address, [toWei('1')], toWei('1970'));
       // const data = abiCoder.encode(["address", "address[]", "address", "uint[]", "uint"], [accounts[0].address, [weth.address], usdc.address, [toWei('1')], toWei('1970')]);
-      
+      console.log(data);
       const call = {
         functionName: 'tokenToToken',
         paramTypes: [
@@ -93,7 +93,6 @@ describe("Knirb", function () {
       const account = brink.account(accounts[0].address, {provider, signer: accounts[0]});
 
       const signedMessage = await accountSigner.signMetaDelegateCall(verifier.address, call);
-
       await weth.approve(accountSigner.accountAddress(), toWei('1'));
       const test = await account.metaDelegateCall(signedMessage, [implementation.address, implementation.address, data.data]);
       const balAfter = await usdc.balanceOf(accounts[0].address);
