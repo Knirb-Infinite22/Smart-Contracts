@@ -3,6 +3,8 @@ const { loadFixture } = require("ethereum-waffle");
 const { ethers } = require("hardhat");
 const brink = require("@brinkninja/sdk");
 const { Wallet } = require("ethers");
+const fs = require('fs');
+
 
 let accounts;
 let callExecutor, implementation, verifier, usdc, weth;
@@ -18,8 +20,8 @@ describe("Knirb", function () {
     callExecutor = await CallExecutor.deploy();
     implementation = await Implementation.deploy();
     verifier = await Verifier.deploy(callExecutor.address);
-    usdc = await TestToken.deploy();
-    weth = await TestToken.deploy();
+    usdc = await TestToken.deploy("USDC","USDC");
+    weth = await TestToken.deploy("WETH","WETH");
 
     const Uni = await ethers.getContractAt("IUniswapV2Router02","0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D");
 
@@ -93,6 +95,11 @@ describe("Knirb", function () {
       const account = brink.account(accounts[0].address, {provider, signer: accounts[0]});
 
       const signedMessage = await accountSigner.signMetaDelegateCall(verifier.address, call);
+
+      // let d = JSON.stringify({signedMessage,data});
+      // console.log(d);
+      // fs.writeFileSync('TestOrder.json', d);
+
       await weth.approve(accountSigner.accountAddress(), toWei('1'));
       const test = await account.metaDelegateCall(signedMessage, [implementation.address, implementation.address, data.data]);
       const balAfter = await usdc.balanceOf(accounts[0].address);

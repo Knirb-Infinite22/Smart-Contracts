@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require('dotenv').config()
+require('hardhat-deploy')
 
 const forkingAccounts = [
   {
@@ -26,9 +27,9 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.14",
   networks:{
-    goreli:{
+    goerli:{
       url: `https://eth-goerli.g.alchemy.com/v2/`+process.env.GORELI_API_KEY,
-      chainId: 80001,
+      chainId: 5,
       accounts: [process.env.PRIVATE_KEY]
     },
     hardhat: {
@@ -42,5 +43,8 @@ module.exports = {
   },
   namedAccounts: {
     account0: 0
-  }
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY
+  },
 };

@@ -6,7 +6,7 @@ const implementation = {};
 
 // Call function to create new order message object
 async function signOrder(signer, tokenIn, tokenOut, inAmount, outAmount){
-    const accountSigner = brink.accountSigner(signer, "goreli");
+    const accountSigner = brink.accountSigner(signer, "goerli");
 
     const call = {
         functionName: 'tokenToToken',
@@ -48,4 +48,3 @@ async function submitOrder(signer, implementation, {signedMessage, data}){
     
     const test = await account.metaDelegateCall(signedMessage, [implementation.address, implementation.address, data.data]);
 }
-      
