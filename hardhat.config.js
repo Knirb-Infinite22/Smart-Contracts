@@ -26,14 +26,21 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.14",
   networks:{
+    goreli:{
+      url: `https://eth-goerli.g.alchemy.com/v2/`+process.env.GORELI_API_KEY,
+      chainId: 80001,
+      accounts: [process.env.PRIVATE_KEY]
+    },
     hardhat: {
       accounts: forkingAccounts,
       forking: {
-        url: `https://eth-mainnet.g.alchemy.com/v2/RaksMnZRLXpvJnA3QhZMSdqQln0dpe-n`,
-        // url: `https://eth-goerli.g.alchemy.com/v2/`+process.env.GORELI_API_KEY,
+        url: `https://eth-goerli.g.alchemy.com/v2/`+process.env.GORELI_API_KEY,
         enabled: true,
         timeout: 0,
       },
     },
+  },
+  namedAccounts: {
+    account0: 0
   }
 };

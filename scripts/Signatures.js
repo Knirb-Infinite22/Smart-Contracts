@@ -34,7 +34,7 @@ async function signOrder(signer, tokenIn, tokenOut, inAmount, outAmount){
       }
     
     const signedMessage = await accountSigner.signMetaDelegateCall(verifier.address, call);
-    const data = await implementation.populateTransaction.tokensToToken(accounts[0].address, [weth.address], usdc.address, [toWei('1')], toWei('1970'));
+    const data = await implementation.populateTransaction.tokensToToken(signer.address, [tokenIn], tokenOut, [inAmount], outAmount);
 
     return {signedMessage,data};
 
