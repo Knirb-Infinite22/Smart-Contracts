@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 const brink = require("@brinkninja/sdk");
 
 const verifier = {};
-const implementation = {};
+const implementation = require("./implementai");
 
 // Call function to create new order message object
 async function signOrder(signer, tokenIn, tokenOut, inAmount, outAmount){
@@ -48,3 +48,8 @@ async function submitOrder(signer, implementation, {signedMessage, data}){
     
     const test = await account.metaDelegateCall(signedMessage, [implementation.address, implementation.address, data.data]);
 }
+
+const signer = ethers.Wallet(PRIVATE_KEY);
+
+const implementation = await ethers.getContractAt(implementation.abi,implementation.address);
+

@@ -17,7 +17,7 @@ abstract contract Oracle {
 
     uint usdReqOut = _getChainlinkPriceOf(tokenOut) * tokenOutAmount;
 
-    return(totalInUSD >= usdReqOut);
+    return(totalInUSD <= usdReqOut);
   }
 
   function _getChainlinkPriceOf(IERC20 _token) internal returns(uint){
