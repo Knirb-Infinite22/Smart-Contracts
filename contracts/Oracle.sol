@@ -11,7 +11,7 @@ abstract contract Oracle {
     testPrices[_token] = _price;
   }
 
-  function _isPriceValid(IERC20 tokenIn, IERC20 tokenOut, uint256 tokenInAmount, uint256 tokenOutAmount) internal returns(bool){
+  function _isPriceValid(IERC20 tokenIn, IERC20 tokenOut, uint256 tokenInAmount, uint256 tokenOutAmount) public view returns(bool){
     uint totalInUSD;
     totalInUSD += (tokenInAmount * testPrices[address(tokenIn)]);
     
