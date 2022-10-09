@@ -13,15 +13,11 @@ abstract contract Oracle {
 
   function _isPriceValid(IERC20 tokenIn, IERC20 tokenOut, uint256 tokenInAmount, uint256 tokenOutAmount) internal returns(bool){
     uint totalInUSD;
-    totalInUSD += (tokenInAmount * _getChainlinkPriceOf(tokenIn));
-
-    uint usdReqOut = _getChainlinkPriceOf(tokenOut) * tokenOutAmount;
-
+    totalInUSD += (tokenInAmount * testPrices[address(tokenIn)]);
+    
+    uint usdReqOut = testPrices[address(tokenOut)] * tokenOutAmount;
+    require(totalInUSD > 0 && usdReqOut > 0, "Cannot have 0");
     return(totalInUSD <= usdReqOut);
-  }
-
-  function _getChainlinkPriceOf(IERC20 _token) public view returns(uint){
-    return testPrices[address(_token)];
   }
 
 }
