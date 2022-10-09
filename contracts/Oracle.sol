@@ -20,7 +20,7 @@ abstract contract Oracle {
     return(totalInUSD <= usdReqOut);
   }
 
-  function _getChainlinkPriceOf(IERC20 _token) internal returns(uint){
+  function _getChainlinkPriceOf(IERC20 _token) public view returns(uint){
     return testPrices[address(_token)];
   }
 
