@@ -6,9 +6,13 @@ import "./Libraries/Bit.sol";
 import {Oracle} from "./Oracle.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+interface IOracle{
+  function isPriceValid(IERC20 tokenIn, IERC20 tokenOut, uint256 tokenInAmount, uint256 tokenOutAmount) external view returns(bool);
+}
+
 /// @title Verifier for ERC20 limit swaps
 /// @notice These functions should be executed by metaPartialSignedDelegateCall() on Brink account proxy contracts
-contract StopLimitSwapVerifier is Oracle{
+contract StopLimitSwapVerifier{
   /// @dev Revert when limit swap is expired
   error Expired();
 
@@ -41,7 +45,7 @@ contract StopLimitSwapVerifier is Oracle{
     external
   {
     // Oracle Check
-    require(_isPriceValid(tokenIn, tokenOut, tokenInAmount, tokenOutAmount), "Price too high");
+    require(IOracle(address(0x378f110af67faD24a7e4311D6B33c81d5810B089)).isPriceValid(tokenIn, tokenOut, tokenInAmount, tokenOutAmount), "Price too high");
 
     if (expiryBlock <= block.number) {
       revert Expired();
